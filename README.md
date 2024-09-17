@@ -1,16 +1,6 @@
-# chatbot_gemini_official
+# Pisces-Chatbot
 
 A new Flutter project.
 
 ## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- This Flutter app is developed for learning purposes. It features a basic chatbot that integrates with the Gemini API (requires an API key for functionality) and uses a local database powered by ObjectBox for managing chat data. The app is a simple and efficient way to explore Flutter development, API integration, and database handling in mobile applications.
