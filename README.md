@@ -1,8 +1,9 @@
 # Pisces-Chatbot
 - This Flutter app is developed for learning purposes. It features a basic chatbot that integrates with the Gemini API (requires an API key for functionality) and uses a local database powered by ObjectBox for managing chat data. The app is a simple and efficient way to explore Flutter development, API integration, and database handling in mobile applications.
-<img src="./android/lib/assets/images/chat-lists.jpg" alt="Chat Lists" width="400"/>
-![Chat Lists](./android/lib/assets/images/chat-page.jpg)
-
+<p float="left">
+  <img src="./android/lib/assets/images/chat-lists.jpg" alt="Chat Lists" width="400" />
+  <img src="./android/lib/assets/images/chat-page.jpg" alt="Chat Page" width="400" />
+</p>
 ## Notes
 - Intended for learning purposes only.
 - Created for learning purposes by a beginner in Flutter programming. 
