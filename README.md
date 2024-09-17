@@ -9,7 +9,7 @@
 ## Notes
 - Intended for learning purposes only.
 - Created for learning purposes by a beginner in Flutter programming. 
-- The app is a basic example and may not receive frequent updates.
+- The app is a basic example and may not receives any updates.
 - You can obtain the Gemini API key from [Google AI Studio](https://ai.google.dev/aistudio).
 
 ## Usage Requirements:
