@@ -5,7 +5,7 @@
 - Intended for learning purposes only.
 - Created for learning purposes by a beginner in Flutter programming. 
 - The app is a basic example and may not receive frequent updates.
-- [Google AI Studio](https://ai.google.dev/aistudio)
+- You can obtain the Gemini API key from [Google AI Studio](https://ai.google.dev/aistudio).
 
 ## Usage Requirements:
 - Minimum API Level: 21 (Android 5.0)
