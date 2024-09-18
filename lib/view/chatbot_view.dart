@@ -19,6 +19,7 @@ class ChatbotView extends StatefulWidget {
 }
 
 class _ChatbotViewState extends State<ChatbotView> {
+
   late ConversationController conversationController;
   TextEditingController chatNameController=TextEditingController();
   TextEditingController chatOriNameController=TextEditingController();
@@ -33,7 +34,7 @@ class _ChatbotViewState extends State<ChatbotView> {
   final SharedPreferencesAsync settings=SharedPreferencesAsync();
   String currentConversationId='';
   String currentGeminiKey='';
-
+  String savedSelectedModel = 'gemini-1.5-flash';
 
   static const TextStyle fontStyle = TextStyle(
     fontSize: 15,
@@ -75,8 +76,20 @@ class _ChatbotViewState extends State<ChatbotView> {
     //set settings of key and default chat
     final String? tempId = await settings.getString('Default-chat-conversation');
     final String? geminiKey = await settings.getString('Gemini-Key');
+    final String? geminiModel = await settings.getString('Gemini-Model');
     currentGeminiKey=geminiKey.toString();
     currentConversationId=tempId.toString();
+    savedSelectedModel=geminiModel.toString();
+
+    //model is empty or null (first time launch)
+    if(savedSelectedModel=='null'){
+      await settings.setString('Gemini-Model', 'gemini-1.5-flash');
+      String? modelApply=await settings.getString('Gemini-Model');
+      savedSelectedModel=modelApply.toString();
+      setState(() {});
+      print('saved model $savedSelectedModel');
+    }
+
     if(currentConversationId=='' || currentConversationId== 'null'){
       DateTime dateTime=DateTime.now();
       // Extract components
@@ -315,15 +328,11 @@ class _ChatbotViewState extends State<ChatbotView> {
 
   }
 
-  Future<void>addKeyToSharePref(String key)async{
-    settings.setString('Gemini-Key', key);
-  }
-
   //submit button
   Future<void> submitQuestion()async{
     FocusScope.of(context).unfocus();
     settings.setString('Default-chat-conversation', currentConversationId);
-    await conversationController.writeConversation(currentGeminiKey,questionController.text, false, true,currentConversationId);
+    await conversationController.writeConversation(currentGeminiKey,questionController.text, false, true,currentConversationId,savedSelectedModel);
     questionController.clear();
     setState(() {});
 
@@ -385,14 +394,14 @@ class _ChatbotViewState extends State<ChatbotView> {
 
         title: Row(
           children: [
-            SizedBox(width: screenWidth*0.03), // Add some spacing between the icon and the text
+            SizedBox(width: screenWidth*0.01), // Add some spacing between the icon and the text
             Text(
               currentConversationId.isEmpty?'emptyy':currentConversationId,
               style: titleStyle,
             ),
-            SizedBox(width: screenWidth*0.03),
+            SizedBox(width: screenWidth*0.02),
             IconButton(
-              icon: Icon(Icons.delete,size: 30),
+              icon: const Icon(Icons.delete,size: 30),
               color: Colors.red[500],
 
               onPressed: (){
@@ -400,6 +409,7 @@ class _ChatbotViewState extends State<ChatbotView> {
                 setState(() {});
               },
             ),
+
           ],
         ),
 
@@ -409,7 +419,7 @@ class _ChatbotViewState extends State<ChatbotView> {
               onPressed: (){
                 Scaffold.of(context).openEndDrawer();
               },
-              icon: Icon(Icons.menu),
+              icon: const Icon(Icons.menu),
             ),
           ),
         ],
@@ -421,13 +431,47 @@ class _ChatbotViewState extends State<ChatbotView> {
           child: Column(
             children: [
               SizedBox(height: screenHeight*0.05),
-              Container(
-                alignment: Alignment.centerRight,
-                child: ElevatedButton.icon(
-                  icon: Icon(Icons.key),
-                  onPressed: addKey,
-                  label: Text('Gemini API key'),
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  DropdownMenu(
+                    textStyle: const TextStyle(
+                      fontSize:15,
+                    ),
+                    width: screenWidth*0.4,
+                    label: const Text('Gemini Model'),
+                    initialSelection: savedSelectedModel,
+                    dropdownMenuEntries: const <DropdownMenuEntry<String>>[
+                      DropdownMenuEntry(value: 'gemini-1.5-flash', label: 'Gemini 1.5 Flash'),
+                      DropdownMenuEntry(value: 'gemini-1.5-pro', label: 'Gemini 1.5 Pro'),
+                    ],
+                    onSelected: (String? selectedModel) async {
+                      if(selectedModel!=null){
+                        print('selected model $selectedModel');
+                        setState(() {
+                          savedSelectedModel=selectedModel;
+                        });
+                        await settings.setString('Gemini-Model', savedSelectedModel);
+                      }
+                    },
+                  ),
+                  SizedBox(width: screenWidth*0.025),
+                  Container(
+                    width: screenWidth*0.3,
+                    alignment: Alignment.centerRight,
+                    child: ElevatedButton.icon(
+                      icon: Icon(Icons.key),
+                      onPressed: addKey,
+                      label: Text(
+                        style: TextStyle(
+                          fontSize: 12,
+                        ),
+                        'Gemini Key',
+
+                      ),
+                    ),
+                  ),
+                ],
               ),
 
               ListView.builder(

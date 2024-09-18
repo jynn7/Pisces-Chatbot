@@ -59,7 +59,7 @@ class ConversationController{
   }
 
   //write into conversation model
-  Future<void> writeConversation(String geminiKey,String question, bool sendByAi, bool sendByUser, String currentConversationId) async{
+  Future<void> writeConversation(String geminiKey,String question, bool sendByAi, bool sendByUser, String currentConversationId,String geminiModelSelected) async{
     DateTime now=DateTime.now();
     //remove loading in ui
     if(sendByAi){
@@ -92,7 +92,7 @@ class ConversationController{
     //returnLatestConversation();
     if(sendByUser){
       //await geminiProcessing(question);
-      await geminiMultiTurn(geminiKey,question,currentConversationId);
+      await geminiMultiTurn(geminiKey,question,currentConversationId,geminiModelSelected);
     }
 
   }
@@ -192,14 +192,14 @@ class ConversationController{
   }
 
   //gemini multi turn without stream
-  Future<void>geminiMultiTurn(String geminiKey,String question,String currentConversationId)async{
+  Future<void>geminiMultiTurn(String geminiKey,String question,String currentConversationId,String geminiModelSelected)async{
     //check gemini key
-    if(geminiKey==null){
+    if(geminiKey==null || geminiModelSelected==null){
       return;
     }
     //determine gemini model
     final geminiModel=GenerativeModel(
-      model: 'gemini-1.5-flash',
+      model: geminiModelSelected,
       apiKey: geminiKey,
     );
     //prompt variable
@@ -212,7 +212,7 @@ class ConversationController{
     //print loading to ui
     messagesLists.add(ConversationModel(conversationId: 'chat-1', text: 'Loading...', sendByAi: true, sendByUser: false, timestamp:DateTime.now()));
     final response=await chat.sendMessage(prompt);
-    writeConversation(geminiKey,response.text.toString(), true,false,currentConversationId);
+    writeConversation(geminiKey,response.text.toString(), true,false,currentConversationId,geminiModelSelected);
   }
 
   void printAllConversations() {
