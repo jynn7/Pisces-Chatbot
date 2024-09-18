@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'objectbox.dart';
 import 'objectbox.g.dart';
+import 'package:msix/msix.dart';
 
 late final Store store;
 late ObjectBox objectbox;

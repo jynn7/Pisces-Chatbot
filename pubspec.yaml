@@ -43,6 +43,7 @@ dependencies:
   objectbox_flutter_libs: any
   dart_openai: ^5.1.0
   shared_preferences: ^2.3.2
+  msix: ^3.16.8
 
 
 dev_dependencies:
@@ -94,6 +95,11 @@ flutter_native_splash:
     image_dark: android/lib/assets/images/launcher_icon_2.png
     icon_background_color_dark: "#121212"
 
+msix_config:
+  display_name: Pisces Chatbot
+  msix_version: 1.0.0.1
+  logo_path: C:\Users\cheah\pisces-chatbot\android\lib\assets\images\launcher_icon_3.png
+  capabilities: internetClient
 
 # The following section is specific to Flutter packages.
 flutter:

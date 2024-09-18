@@ -1,4 +1,5 @@
 import 'package:objectbox/objectbox.dart';
+import 'package:msix/msix.dart';
 //import 'package:objectbox_flutter_libs/objectbox_flutter_libs.dart';
 
 @Entity()

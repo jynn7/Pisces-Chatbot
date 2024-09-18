@@ -7,6 +7,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:objectbox/objectbox.dart';
 import 'package:dart_openai/dart_openai.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:msix/msix.dart';
 
 class ConversationController{
   final SharedPreferencesAsync settings=SharedPreferencesAsync();
